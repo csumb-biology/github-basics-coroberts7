@@ -3,7 +3,9 @@
 #Working template of hydropathy score calculation script
 #You need to put in comments for every line
 
-if(len(sys.argv) < ):
+import sys
+
+if(len(sys.argv) < 4):
     print ""
     print "Usage: <filename>.py -i <inputfile> -w <windowsize>"
     print "-i: input file"
@@ -14,10 +16,11 @@ if(len(sys.argv) < ):
 #Parse arguments
 for i in range(len(sys.argv)):
     if (sys.argv[i]) == "-i":
-        InFileName = sys.argv[i+1]
+        InSeqFileName = sys.argv[i+1]
     elif(sys.argv[i]) == "-w":
         window = sys.argv[i+1]
-        
+
+InFileName = "amino_acid_hydropathy_values.txt"        
 InFile = open(InFileName, 'r')
 Data=[]
 Hydropathy={}
@@ -35,7 +38,6 @@ InFile.close()
 window=int(window)
 Value=0
 window_counter=0
-InSeqFileName = raw_input("Name of sequence file to analyze?\n")
 InSeqFile = open(InSeqFileName, 'r')
 LineNumber = 0
 
@@ -48,13 +50,15 @@ InSeqFile.close()
 OutFileName = InSeqFileName.strip('.fasta') + ".output.csv"
 OutFile = open(OutFileName,"w")
 
+windows = []
+Hvalues = []
+
 for i in range(len(ProtSeq)):
     Value+=Hydropathy[ProtSeq[i]]
     if(i>(window-1) and i<=(len(ProtSeq)-window)):
         Value=Value-Hydropathy[ProtSeq[i-window]]
-        OutString = "%d,%.2f" % (window_counter, Value)
-        OutFile.write(OutString + "\n")
-
+    	Hvalues.append(Value)    
+    windows.append(window_counter)
     window_counter+=1
 
 OutFile.close()
