@@ -4,6 +4,8 @@
 #You need to put in comments for every line
 
 import sys
+import numpy as np
+from matplotlib import pyplot as plt
 
 if(len(sys.argv) < 4):
     print ""
@@ -58,7 +60,17 @@ for i in range(len(ProtSeq)):
     if(i>(window-1) and i<=(len(ProtSeq)-window)):
         Value=Value-Hydropathy[ProtSeq[i-window]]
     	Hvalues.append(Value)    
-    windows.append(window_counter)
+    	windows.append(window_counter)
     window_counter+=1
 
 OutFile.close()
+
+
+plt.plot(windows,Hvalues)
+
+plt.xlabel('time (s)')
+plt.ylabel('voltage (mV)')
+plt.title('Whats the opposite of a stop sign? A cosine')
+plt.grid(True)
+plt.savefig("test.png")
+plt.show()
