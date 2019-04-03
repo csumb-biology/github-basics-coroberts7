@@ -3,7 +3,21 @@
 #Working template of hydropathy score calculation script
 #You need to put in comments for every line
 
-InFileName = "amino_acid_hydropathy_values.txt"
+if(len(sys.argv) < ):
+    print ""
+    print "Usage: <filename>.py -i <inputfile> -w <windowsize>"
+    print "-i: input file"
+    print "-w: size of sliding window (int)"
+    print ""
+    #exits the program
+    sys.exit()
+#Parse arguments
+for i in range(len(sys.argv)):
+    if (sys.argv[i]) == "-i":
+        InFileName = sys.argv[i+1]
+    elif(sys.argv[i]) == "-w":
+        window = sys.argv[i+1]
+        
 InFile = open(InFileName, 'r')
 Data=[]
 Hydropathy={}
@@ -17,7 +31,7 @@ for Line in InFile:
     LineNumber = LineNumber + 1
 InFile.close()
 
-window = raw_input("Window size?")
+
 window=int(window)
 Value=0
 window_counter=0
